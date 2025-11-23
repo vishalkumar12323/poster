@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, String, Column, Integer, ForeignKey
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 
 
-engine = create_engine(url="sqlite:///posts.db")
+engine = create_engine(url="sqlite:///poster.db")
 
 Base = declarative_base()
 
@@ -21,10 +21,10 @@ class Post(Base):
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    name = Column(String, nullable=True)
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
-    post = relationship("Post", back_populates="user")
+    posts = relationship("Post", back_populates="user")
 
     def __repr__(self):
         return f"<User(id={self.id}, name='{self.name}', email='{self.email}', password='{self.password}')>"
