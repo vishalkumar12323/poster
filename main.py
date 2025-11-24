@@ -1,13 +1,26 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 from controllers.user_controllers import login_user, register_user
+from lib.connection import client, User, Post
+from sqlalchemy.orm import defer
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = Flask(__name__)
 
+app.secret_key = os.getenv("SECRET_KEY")
+
 @app.route("/")
 def home():
-    return render_template('index.html')
+    if session.get("is_logged_in"):
+        user_id = session.get("user_id")
+        # Exclude password from the query
+        logged_in_user = client.query(User).filter_by(id=user_id).options(defer(User.password)).first()
 
+        if logged_in_user:
+            return render_template('index.html', user_email=logged_in_user.email)
+    return redirect(url_for("login"), code=302)
 
 
 @app.route("/login", methods=["POST", "GET"])

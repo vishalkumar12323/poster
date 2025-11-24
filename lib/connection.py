@@ -1,8 +1,12 @@
 from sqlalchemy import create_engine, String, Column, Integer, ForeignKey
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+import os
+from dotenv import load_dotenv
 
 
-engine = create_engine(url="sqlite:///poster.db")
+load_dotenv()
+url=os.getenv("SQLALCHEMY_DATABASE_URI")
+engine = create_engine(url=url)
 
 Base = declarative_base()
 
@@ -32,4 +36,4 @@ class User(Base):
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
-session = Session()
+client = Session()

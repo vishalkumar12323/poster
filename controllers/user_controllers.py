@@ -1,6 +1,6 @@
-from flask import redirect
+from flask import redirect, session, url_for
 from typing import TypedDict, Optional
-from lib.connection import session, User
+from lib.connection import client, User
 
 
 class TUser(TypedDict, total=False):
@@ -12,7 +12,7 @@ def login_user(user: TUser):
     email = user.get('email')
     password = user.get("password")
 
-    user_by_email = session.query(User).filter_by(email=email).first()
+    user_by_email = client.query(User).filter_by(email=email).first()
 
     if user_by_email:
         stored_password = getattr(user_by_email, "password", None)
@@ -20,7 +20,9 @@ def login_user(user: TUser):
             stored_password = user_by_email["password"]
 
         if stored_password == password:
-            return redirect('/', code=302)
+            session["user_id"] = user_by_email.id
+            session["is_logged_in"] = True
+            return redirect(url_for("/"), code=302)
     
     return redirect("/login")
 
@@ -30,13 +32,13 @@ def register_user(user: TUser):
     email = user.get("email")
     password = user.get("password")
 
-    exists = session.query(User).filter_by(email=email).first()
+    exists = client.query(User).filter_by(email=email).first()
 
     if exists:
         return redirect("/register")
     
     new_user = User(name=name, email=email, password=password)
-    session.add(new_user)
-    session.commit()
+    client.add(new_user)
+    client.commit()
 
     return redirect("/login")
