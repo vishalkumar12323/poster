@@ -5,8 +5,11 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
-url=os.getenv("SQLALCHEMY_DATABASE_URI")
-engine = create_engine(url=url)
+database_url = os.getenv("SQLALCHEMY_DATABASE_URI")
+if not database_url:
+    raise ValueError("SQLALCHEMY_DATABASE_URI environment variable is not set")
+
+engine = create_engine(url=database_url)
 
 Base = declarative_base()
 

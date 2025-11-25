@@ -1,0 +1,130 @@
+.poster-navbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+    background: var(--nav-bg);
+    color: #000000;
+    box-shadow: 0 0 4px rgba(2, 6, 23, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+}
+
+/* brand */
+.poster-brand .logo {
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.14rem;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.75rem;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent);
+    box-shadow: 0 1px 2px rgba(2, 6, 23, 0.6), inset 0 -2px 0 rgba(255, 255, 255, 0.02);
+    transition: transform 220ms cubic-bezier(.2, .9, .22, 1), box-shadow 220ms;
+}
+
+.poster-brand .logo:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 2px rgba(56, 189, 248, 0.08), 0 1px 3px rgba(2, 6, 23, 0.6);
+}
+
+/* links */
+.poster-links {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+    margin: 0;
+    align-items: center;
+    flex: 1;
+    justify-content: right;
+    padding-left: 0;
+}
+
+.poster-links .link {
+    color: black;
+    text-decoration: none;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 160ms ease, background-color 260ms ease, transform 260ms cubic-bezier(.2, .9, .22, 1);
+    transition-delay: 80ms;
+}
+
+.poster-links .link:hover,
+.poster-links .link:focus {
+    color: var(--accent);
+    transform: translateY(-3px);
+    outline: none;
+}
+
+/* buttons */
+.poster-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0.85rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: transform 190ms cubic-bezier(.2, .9, .22, 1), box-shadow 190ms, background 190ms;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* primary modern gradient button */
+.btn-primary {
+    color: #042027;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    box-shadow: 0 1px 2px rgba(2, 6, 23, 0.6), inset 0 -2px 0 rgba(255, 255, 255, 0.02);
+}
+
+.btn-primary:hover {
+    transition: transform 220ms cubic-bezier(.2, .9, .22, 1), box-shadow 220ms;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 2px rgba(56, 189, 248, 0.08), 0 1px 3px rgba(2, 6, 23, 0.6);
+}
+
+/* ghost / outline logout */
+.btn-ghost {
+    color: #042027;
+    background: var(--muted);
+    box-shadow: 0 1px 2px rgba(2, 6, 23, 0.6), inset 0 -2px 0 rgba(255, 255, 255, 0.02);
+}
+
+.btn-ghost:hover {
+    transition: transform 220ms cubic-bezier(.2, .9, .22, 1), box-shadow 220ms;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 2px rgba(56, 189, 248, 0.08), 0 1px 3px rgba(2, 6, 23, 0.6);
+}
+
+/* small screen */
+@media (max-width:640px) {
+    .poster-links {
+        display: none;
+    }
+
+    .poster-navbar {
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .poster-brand .logo {
+        font-size: 0.95rem;
+        padding: 0.45rem 0.6rem;
+    }
+}

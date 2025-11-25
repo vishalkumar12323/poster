@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f9f9f9;
+    --nav-bg: linear-gradient(90deg, #ffffff 20%, #ffffff 100%);
+    --muted: #ffd500;
+    --accent: #51fd62;
+    --accent-2: #00ef7b;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+footer {
+    margin-top: auto;
+}
