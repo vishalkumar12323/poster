@@ -21,10 +21,8 @@ def home():
 
         if logged_in_user:
             posts = client.query(Post).filter_by(user_id=user_id).all()
-
-            print(logged_in_user)
-            print(posts)
-            return render_template('index.html', user=logged_in_user, posts=posts, is_logged_in=True)
+            
+            return render_template('index.html', user=logged_in_user, posts=posts, is_logged_in=session.get("is_logged_in"))
         
     return redirect(url_for("login"), code=302)
 

@@ -1,6 +1,4 @@
-{% include 'head.html' %}
-<style>
-  :root {
+:root {
     --bg: #ffffff;
     --fg: #0b0b0b;
     --muted: #6b6b6b;
@@ -8,48 +6,46 @@
     --glass: rgba(0, 0, 0, 0.06);
     --radius: 14px;
     font-synthesis: none;
-  }
+}
 
-  html,
-  body {
+html,
+body {
     height: 100%;
     background: var(--bg);
     color: var(--fg);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
-  }
+}
 
-  .center-wrap {
+.center-wrap {
     min-height: 100vh;
     display: grid;
     place-items: center;
     padding: 2rem;
-  }
+}
 
-  .card {
+.card {
     width: 100%;
     max-width: 440px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 0.98)
-    );
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.9),
+            rgba(255, 255, 255, 0.98));
     border-radius: var(--radius);
     box-shadow: 0 15px 33px rgb(42 41 41 / 26%);
     border: 1px solid rgba(11, 11, 11, 0.06);
     padding: 2.25rem;
     box-sizing: border-box;
-  }
+}
 
-  .brand {
+.brand {
     display: flex;
     gap: 0.75rem;
     align-items: center;
     margin-bottom: 1.25rem;
-  }
+}
 
-  .logo {
+.logo {
     width: 44px;
     height: 44px;
     border-radius: 10px;
@@ -59,41 +55,41 @@
     color: var(--bg);
     background: linear-gradient(135deg, var(--fg), #444);
     flex: 0 0 44px;
-  }
+}
 
-  h1 {
+h1 {
     font-size: 1.15rem;
     margin: 0;
     line-height: 1;
     color: var(--fg);
-  }
-  p.lead {
+}
+
+p.lead {
     margin: 0;
     color: var(--muted);
     font-size: 0.92rem;
-  }
+}
 
-  form.register-form {
+form.login-form {
     margin-top: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
-  }
+}
 
-  .field {
+.field {
     display: flex;
     flex-direction: column;
-  }
+}
 
-  label {
+label {
     font-size: 0.78rem;
     color: var(--muted);
     margin-bottom: 0.35rem;
-  }
+}
 
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
+input[type="email"],
+input[type="password"] {
     appearance: none;
     border: 1px solid rgba(11, 11, 11, 0.12);
     background: transparent;
@@ -103,29 +99,29 @@
     color: var(--fg);
     outline: none;
     transition: box-shadow 0.12s ease, border-color 0.12s ease,
-      transform 0.06s ease;
+        transform 0.06s ease;
     box-shadow: 0 1px 0 rgba(11, 11, 11, 0.02) inset;
-  }
+}
 
-  input::placeholder {
+input::placeholder {
     color: rgba(11, 11, 11, 0.25);
-  }
+}
 
-  input:focus {
+input:focus {
     border-color: var(--accent);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
     transform: translateY(-1px);
-  }
+}
 
-  .actions {
+.actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
     margin-top: 0.25rem;
-  }
+}
 
-  .btn {
+.btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -139,19 +135,20 @@
     font-weight: 600;
     text-decoration: none;
     transition: transform 0.08s ease, box-shadow 0.12s ease;
-  }
-  .btn:hover {
+}
+
+.btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  }
+}
 
-  .btn.primary {
+.btn.primary {
     background: var(--fg);
     color: var(--bg);
     border-color: rgba(0, 0, 0, 0.75);
-  }
+}
 
-  .meta {
+.meta {
     margin-top: 0.9rem;
     font-size: 0.86rem;
     color: var(--muted);
@@ -159,98 +156,34 @@
     justify-content: space-between;
     align-items: center;
     gap: 0.75rem;
-  }
+}
 
-  .helper {
+.helper {
     display: block;
     text-align: center;
     margin-top: 1rem;
     font-size: 0.9rem;
     color: var(--muted);
-  }
+}
 
-  a.link {
+a.link {
     color: var(--fg);
     text-decoration: underline;
     text-underline-offset: 4px;
-  }
+}
 
-  @media (max-width: 520px) {
+@media (max-width: 520px) {
     .card {
-      padding: 1.35rem;
-      border-radius: 12px;
+        padding: 1.35rem;
+        border-radius: 12px;
     }
+
     .brand h1 {
-      font-size: 1rem;
+        font-size: 1rem;
     }
+
     .logo {
-      width: 40px;
-      height: 40px;
+        width: 40px;
+        height: 40px;
     }
-  }
-</style>
-
-<main class="center-wrap" role="main" aria-labelledby="register-heading">
-  <section class="card" aria-label="Register form area">
-    <div class="brand">
-      <div class="logo" aria-hidden="true">P</div>
-      <div>
-        <h1 id="register-heading">Welcome 👋</h1>
-        <p class="lead">Create new account — secure, fast, and minimal.</p>
-      </div>
-    </div>
-
-    <form
-      class="register-form"
-      action="/register"
-      method="post"
-      autocomplete="on"
-      novalidate
-    >
-      <div class="field">
-        <label for="name">Your Name</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          placeholder="Adam bob"
-          required
-        />
-      </div>
-      <div class="field">
-        <label for="email">Email address</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="you@example.com"
-          required
-        />
-      </div>
-
-      <div class="field">
-        <label for="password">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          required
-        />
-      </div>
-
-      <div style="margin-top: 1rem; display: flex; gap: 0.5rem">
-        <button class="btn primary" type="submit" aria-label="Register">
-          Register
-        </button>
-        <a class="btn" href="/login" aria-label="Login account">Login</a>
-      </div>
-
-      <div class="helper" aria-hidden="true">
-        By continuing you agree to the Terms and Privacy Policy.
-      </div>
-    </form>
-  </section>
-</main>
-
-{% include 'footer.html' %}
+}
