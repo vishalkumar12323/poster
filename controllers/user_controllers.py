@@ -22,7 +22,7 @@ def login_user(user: TUser):
         if stored_password == password:
             session["user_id"] = user_by_email.id
             session["is_logged_in"] = True
-            return redirect(url_for("home"), code=302)
+            return redirect(url_for("dashboard"), code=302)
     
     return redirect("/login")
 

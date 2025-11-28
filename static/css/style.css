@@ -9,7 +9,6 @@
 :root {
     --bg: #f9f9f9;
     --nav-bg: linear-gradient(90deg, #ffffff 20%, #ffffff 100%);
-    --muted: #ffd500;
     --accent: #51fd62;
     --accent-2: #00ef7b;
 }

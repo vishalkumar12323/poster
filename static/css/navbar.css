@@ -59,7 +59,7 @@
 
 .poster-links .link:hover,
 .poster-links .link:focus {
-    color: var(--accent);
+    color: #ffc400;
     transform: translateY(-3px);
     outline: none;
 }
@@ -102,7 +102,7 @@
 /* ghost / outline logout */
 .btn-ghost {
     color: #042027;
-    background: var(--muted);
+    background: #ffd500;
     box-shadow: 0 1px 2px rgba(2, 6, 23, 0.6), inset 0 -2px 0 rgba(255, 255, 255, 0.02);
 }
 
