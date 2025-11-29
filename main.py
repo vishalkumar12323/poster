@@ -6,7 +6,8 @@ from flask_login import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
-
+import re
+from sqlalchemy import DateTime, func
 from utils.auth_forms import LoginForm, RegisterFrom
 from utils.post_form import CreateForm, EditForm
 from dotenv import load_dotenv
@@ -48,14 +49,10 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     content = db.Column(db.String, nullable=False)
-    # Remove the redundant 'author' string column if it's meant to be the relationship object.
-    # author = db.Column(db.String, nullable=False) 
+    slug = db.Column(db.String, nullable=False)
+    created_at = db.Column(DateTime(timezone=True), server_default=func.now())
 
-    # This is the foreign key column. Note the tablename in db.ForeignKey is lowercase.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    
-    # Remove this explicit relationship definition when using backref in User model.
-    # user = db.relationship("User", backref="posts", lazy=True)
 
 
 @login_manager.user_loader
@@ -70,7 +67,8 @@ def home():
 @app.route("/dashboard")
 @login_required
 def dashboard():
-    return render_template("dashboard.html", user=current_user)
+    user_posts = Post.query.filter_by(user_id=current_user.id).all()
+    return render_template("dashboard.html", user=current_user, posts=user_posts)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -120,15 +118,27 @@ def logout():
     return redirect(url_for('login'))
 
 
+def create_slug(title:str) -> str:
+    title = title.lower()
+    title = re.sub(r'[^a-z0-9\s-]', '', title)
+
+    slug = re.sub(r'\s+', '-', title).strip('-')
+    
+    return slug
 
 @app.route("/new-post", methods=["GET", "POST"])
+@login_required
 def create_post():
     form =  CreateForm()
 
     if form.validate_on_submit():
+        slug = create_slug(form.title.data)
+        post = Post(title=form.title.data, content=form.content.data, slug=slug, user_id=current_user.id)
+        db.session.add(post)
+        db.session.commit()
 
-        pass
-    return render_template('forms/create_post.html', form=form)
+        return redirect(url_for("dashboard"), code=302)
+    return render_template('forms/create_post.html', form=form, user=current_user)
 
 
 
