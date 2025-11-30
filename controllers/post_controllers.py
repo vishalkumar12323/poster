@@ -1,17 +1,8 @@
-from flask import render_template, url_for, request, session
-from datetime import datetime
-from lib.connection import Post, client
-from typing import TypedDict
+from flask import render_template, redirect, url_for
+from utils.post_form import CreateForm, EditForm
 import re
-
-
-# class TPost(TypedDict, total=False):
-#     id: int
-#     title: str
-#     content: str
-#     user_id: int
-#     author: str
-#     created_at: datetime
+from lib.models import Post, db
+from flask_login import current_user
 
 
 def create_slug(title:str) -> str:
@@ -22,23 +13,39 @@ def create_slug(title:str) -> str:
     
     return slug
 
-def get_latest_post():
-    pass
 
-def get_user_post():
-    pass
+def view(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    return render_template('view_post.html', post=post, user=current_user)
 
-def create_post():
-    title = request.form.get("title", "")
-    content = request.form.get("content", "")
-    slug = create_slug(title)
-    user_id = session["user_id"]
 
-    
-    pass
+def create():
+    form =  CreateForm()
 
-def edit_post():
-    pass
+    if form.validate_on_submit():
+        slug = create_slug(form.title.data)
+        post = Post(title=form.title.data, content=form.content.data, slug=slug, user_id=current_user.id)
+        db.session.add(post)
+        db.session.commit()
 
-def delete_post():
-    pass
+        return redirect(url_for("dashboard"), code=302)
+    return render_template('forms/create_post.html', form=form, user=current_user)
+
+
+def edit(post_id):
+    form = EditForm()
+    post = Post.query.filter_by(id=post_id).first()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        post.slug = create_slug(form.title.data)
+        db.session.commit()
+        return redirect(url_for("dashboard"), code=302)
+    return render_template('forms/edit_post.html', form=form, user=current_user, post=post)
+
+
+def delete(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for("dashboard"), code=302)

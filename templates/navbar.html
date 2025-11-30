@@ -12,10 +12,10 @@
 
   <div class="poster-actions">
     {% if user.is_authenticated %}
-    <a href="{{ url_for('logout') }}" class="btn btn-ghost">Logout</a>
+    <a href="{{ url_for('logout_user') }}" class="btn btn-ghost">Logout</a>
     {% else %}
-    <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
-    <a href="{{ url_for('register') }}" class="btn btn-primary">Register</a>
+    <a href="{{ url_for('signin') }}" class="btn btn-primary">Login</a>
+    <a href="{{ url_for('signup') }}" class="btn btn-primary">Register</a>
     {% endif %}
   </div>
 </nav>

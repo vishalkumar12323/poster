@@ -1,44 +1,47 @@
-from flask import redirect, session, url_for
-from typing import TypedDict, Optional
-from lib.connection import client, User
+from flask import redirect, url_for, render_template
+from flask_login import current_user, login_user, logout_user
+from utils.auth_forms import LoginForm, RegisterFrom
+from lib.models import User, db
+from werkzeug.security import generate_password_hash
+from flask import flash
 
 
-class TUser(TypedDict, total=False):
-    name: Optional[str]
-    email: str
-    password: str
-
-def login_user(user: TUser):
-    email = user.get('email')
-    password = user.get("password")
-
-    user_by_email = client.query(User).filter_by(email=email).first()
-
-    if user_by_email:
-        stored_password = getattr(user_by_email, "password", None)
-        if stored_password is None and isinstance(user_by_email, dict):
-            stored_password = user_by_email["password"]
-
-        if stored_password == password:
-            session["user_id"] = user_by_email.id
-            session["is_logged_in"] = True
-            return redirect(url_for("dashboard"), code=302)
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
     
-    return redirect("/login")
+    form = RegisterFrom()
+    if form.validate_on_submit():
+        exisiting = User.query.filter_by(email=form.email.data).first()
+        if exisiting:
+            print("existing", exisiting)
+            flash("Email already registered")
+            return redirect(url_for('register'))
+
+        user = User(name=form.name.data, email=form.email.data, hashed_password=generate_password_hash(form.password.data))
+        db.session.add(user)
+        db.session.commit()
+        flash("Registration successful. Please log in.")
+        return redirect(url_for("signin"))
+
+    return render_template('forms/register.html', form=form)
 
 
-def register_user(user: TUser):
-    name = user.get("name")
-    email = user.get("email")
-    password = user.get("password")
-
-    exists = client.query(User).filter_by(email=email).first()
-
-    if exists:
-        return redirect("/register")
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
     
-    new_user = User(name=name, email=email, password=password)
-    client.add(new_user)
-    client.commit()
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user) 
+            return redirect(url_for("dashboard"))
+        flash("Invalid email or password")
 
-    return redirect("/login")
+    return render_template('forms/login.html', form=form)
+
+def logout():
+    logout_user()
+    flash(message="You have been logged out")
+    return redirect(url_for('signin'))
