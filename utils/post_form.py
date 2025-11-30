@@ -14,4 +14,4 @@ class EditForm(FlaskForm):
     title = StringField(label="Post Title", validators=[DataRequired("post title is required")])
     content = StringField(label="Content", validators=[DataRequired('post content is required')])
 
-    sumbit = SubmitField(label="update post")
+    submit = SubmitField(label="update post")

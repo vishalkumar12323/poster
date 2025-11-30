@@ -141,6 +141,34 @@ def create_post():
     return render_template('forms/create_post.html', form=form, user=current_user)
 
 
+@app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+@login_required
+def edit_post(post_id):
+    form = EditForm()
+    post = Post.query.filter_by(id=post_id).first()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        post.slug = create_slug(form.title.data)
+        db.session.commit()
+        return redirect(url_for("dashboard"), code=302)
+    return render_template('forms/edit_post.html', form=form, user=current_user, post=post)
+
+
+@app.route("/delete-post/<int:post_id>", methods=["POST", "GET"])
+@login_required
+def delete_post(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for("dashboard"), code=302)
+
+@app.route("/view-post/<int:post_id>")
+@login_required
+def view_post(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    return render_template('view_post.html', post=post, user=current_user)
+
 
 if __name__ == "__main__":
     if not os.path.exists("instance/poster.db"):

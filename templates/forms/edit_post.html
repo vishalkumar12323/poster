@@ -1,0 +1,19 @@
+<div class="wrapper-card">
+    <form action="{{ url_for('edit_post', post_id=post.id) }}" method="post">
+        {{ form.hidden_tag() }}
+        <div class="field">
+            {{ form.title.label }} {{ form.title(value=post.title) }} {% for e in form.title.errors
+            %}<span style="color: red; font-size: 0.8rem; padding-left: 0.5rem">{{ e }}</span>{% endfor %}
+        </div>
+
+        <div class="field">
+            {{ form.content.label }} {{ form.content(value=post.content) }} {% for e in
+            form.content.errors %}<span style="color: red; font-size: 0.8rem; padding-left: 0.5rem">{{ e }}</span>{%
+            endfor %}
+        </div>
+
+        <div style="margin-top: 1rem; display: flex; gap: 0.5rem">
+            {{ form.submit() }}
+        </div>
+    </form>
+</div>
