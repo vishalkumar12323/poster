@@ -1,12 +1,88 @@
-<div class="wrapper-card">
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content }}</p>
-    <p>{{ post.created_at }}</p>
-    <p>{{ post.author.name }}</p>
-    <a href="{{ url_for('update_post', post_id=post.id) }}">
-        Edit
-    </a>
-    <a href="{{ url_for('delete_post', post_id=post.id) }}">
-        Delete
-    </a>
+<style>
+    .post-wrap {
+        font-family: "Open Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 500;
+        font-style: normal;
+
+        width: 100%;
+        max-width: 1050px;
+        background: #f2f2f2;
+        margin: 2rem auto;
+        padding: 1rem 1rem;
+        border-radius: 2px;
+    }
+
+    .post-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 17px;
+        border-radius: 2px;
+        font-weight: 600;
+        border: 0;
+        cursor: pointer;
+        text-decoration: none;
+        color: #100c0c;
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .post-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .post-btn.edit {
+        padding: 9px 17px;
+        background: #05da1a;
+        color: #fff;
+    }
+
+    .post-btn.delete {
+        background: #f31e1e;
+        color: #fff;
+    }
+
+    .post-btn.back {
+        background: #e6e6e6;
+        color: #100c0c;
+    }
+
+    .actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    hr {
+        margin: 1rem 0;
+        border: 0;
+        border-top: 1px solid #cfcfcf;
+    }
+</style>
+
+<div class="post-wrap">
+    <button class="post-btn back">Back</button>
+    <div class="post-content">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.content }}</p>
+        <p>{{ post.created_at }}</p>
+        <p>{{ post.author.name }}</p>
+    </div>
+
+    <hr>
+    <div class="actions">
+        <a class="post-btn edit" href="{{ url_for('update_post', post_id=post.id) }}">
+            Edit
+        </a>
+        <a class="post-btn delete" href="{{ url_for('delete_post', post_id=post.id) }}">
+            Delete
+        </a>
+    </div>
 </div>
+
+
+<script>
+    document.querySelector(".post-btn.back").addEventListener("click", () => {
+        window.location.href = "{{ url_for('dashboard')}}"
+    })
+</script>
