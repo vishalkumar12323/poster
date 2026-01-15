@@ -5,7 +5,7 @@ from lib.models import User, db
 from werkzeug.security import generate_password_hash
 from flask import flash
 
-# function for register/signup new user
+# function for register/signup new users
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
@@ -26,7 +26,7 @@ def register():
 
     return render_template('forms/register.html', form=form)
 
-
+# function for login/signin existing users
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
