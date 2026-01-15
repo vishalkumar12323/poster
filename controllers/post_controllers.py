@@ -4,7 +4,7 @@ import re
 from lib.models import Post, db
 from flask_login import current_user
 
-
+# function for create post:slug using post:title
 def create_slug(title:str) -> str:
     title = title.lower()
     title = re.sub(r'[^a-z0-9\s-]', '', title)
