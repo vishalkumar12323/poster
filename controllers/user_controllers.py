@@ -41,6 +41,7 @@ def login():
 
     return render_template('forms/login.html', form=form)
 
+# function for logout user and redirect to login
 def logout():
     logout_user()
     flash(message="You have been logged out")
