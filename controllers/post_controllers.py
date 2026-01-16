@@ -43,7 +43,7 @@ def edit(post_id):
         return redirect(url_for("dashboard"), code=302)
     return render_template('forms/edit_post.html', form=form, user=current_user, post=post)
 
-
+# function for deleting a post using the post id
 def delete(post_id):
     post = Post.query.filter_by(id=post_id).first()
     db.session.delete(post)
