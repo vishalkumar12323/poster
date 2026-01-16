@@ -18,7 +18,7 @@ def view(post_id):
     post = Post.query.filter_by(id=post_id).first()
     return render_template('view_post.html', post=post, user=current_user)
 
-# function for create new post and adding in database with user_id
+# function for creating a new post and adding in database with the user_id
 def create():
     form =  CreateForm()
 
@@ -31,7 +31,7 @@ def create():
         return redirect(url_for("dashboard"), code=302)
     return render_template('forms/create_post.html', form=form, user=current_user)
 
-
+# function for editing an existing post using the post id
 def edit(post_id):
     form = EditForm()
     post = Post.query.filter_by(id=post_id).first()
