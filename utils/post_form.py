@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
-
+# defining PostForm
 class CreateForm(FlaskForm):
     title = StringField(label="Post Title", validators=[DataRequired("post title is required")])
     content = StringField(label="Content", validators=[DataRequired('post content is required')])
