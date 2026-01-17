@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.hashed_password, password)
 
-
+# define post table
 class Post(db.Model):
     __tablename__ = "posts"
     id = db.Column(db.Integer, primary_key=True)
