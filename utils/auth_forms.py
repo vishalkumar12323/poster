@@ -27,7 +27,7 @@ class RegisterFrom(FlaskForm):
 
     submit = SubmitField("Register")
 
-
+# defining LoginForm using wtforms
 class LoginForm(FlaskForm):
     email = EmailField(
         "Email",
